@@ -2,8 +2,10 @@ package web.protocol.icmp;
 
 import lombok.Builder;
 import lombok.Getter;
+import util.ByteUtils;
 import web.protocol.Packet;
 
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,6 +61,11 @@ public class IcmpPacket implements Packet {
         public List<byte[]> getRawFields() {
             List<byte[]> rawFields = new ArrayList<>();
             //TODO: ICMP Header의 필드를 구성한다.
+            rawFields.add(ByteUtils.toByteArray(type.value));
+            rawFields.add(ByteUtils.toByteArray(type.value));
+            rawFields.add(ByteUtils.toByteArray(checksum));
+            rawFields.add(ByteUtils.toByteArray(identification));
+            rawFields.add(ByteUtils.toByteArray(sequenceNumber));
             return rawFields;
         }
     }

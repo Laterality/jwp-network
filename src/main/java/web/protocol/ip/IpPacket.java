@@ -109,7 +109,7 @@ public class IpPacket implements Packet {
 
         private List<byte[]> getRawFields(boolean zeroInsteadOfChecksum) {
             List<byte[]> rawFields = new ArrayList<>();
-            rawFields.add(ByteUtils.toByteArray((byte) ((version.getValue() << 4) | ihl)));
+            rawFields.add(ByteUtils.toByteArray((byte) ((version.getValue() << 4) | (ihl / 4))));
             rawFields.add(new byte[]{tos.value()});
             rawFields.add(ByteUtils.toByteArray(calLength()));
             rawFields.add(ByteUtils.toByteArray(identification));

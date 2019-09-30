@@ -10,7 +10,9 @@ import web.protocol.helper.PacketTestHelper;
 import web.tool.packet.PacketNativeException;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static web.protocol.ethernet.EthernetPacket.EthernetHeader.*;
+import static web.protocol.ethernet.EthernetPacket.EthernetHeader.DST_ADDR_OFFSET;
+import static web.protocol.ethernet.EthernetPacket.EthernetHeader.SRC_ADDR_OFFSET;
+import static web.protocol.ethernet.EthernetPacket.EthernetHeader.TYPE_OFFSET;
 import static web.protocol.ethernet.Type.ARP;
 
 public class EthernetPacketTest extends PacketTestHelper {

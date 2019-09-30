@@ -23,7 +23,7 @@ class ArpPacketTest extends PacketTestHelper {
 
     private ArpPacket.ArpHeader createArpHeader() {
         return ArpHeader.builder()
-                //TODO: ARP Header를 구성한다.
-                .build();
+            //TODO: ARP Header를 구성한다.
+            .build();
     }
 }

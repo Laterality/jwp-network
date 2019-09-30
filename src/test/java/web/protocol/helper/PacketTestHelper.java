@@ -1,5 +1,6 @@
 package web.protocol.helper;
 
+import com.sun.jna.Platform;
 import lombok.ToString;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -7,7 +8,12 @@ import web.protocol.Packet;
 import web.protocol.ethernet.EthernetPacket;
 import web.protocol.ethernet.EthernetPacketTest;
 import web.tool.NetInfo;
-import web.tool.packet.*;
+import web.tool.packet.FindWlanName;
+import web.tool.packet.NetworkInterface;
+import web.tool.packet.NetworkInterfaceService;
+import web.tool.packet.PacketHandler;
+import web.tool.packet.PacketListener;
+import web.tool.packet.PacketNativeException;
 import web.tool.packet.dump.TcpDump;
 
 import java.util.ArrayList;
@@ -33,6 +39,10 @@ public class PacketTestHelper {
         macAddress = netInfo.getMacAddress();
         localIp = netInfo.getIp();
         listener = packet -> gotPacket(packet);
+        if (Platform.isWindows()) {
+            handler = getHandler(FindWlanName.findWlanNicName());
+            return;
+        }
         handler = getHandler(nicName);
     }
 

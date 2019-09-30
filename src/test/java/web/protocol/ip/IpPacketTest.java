@@ -36,7 +36,7 @@ class IpPacketTest extends PacketTestHelper {
 
     public static IpHeader createIpHeader() {
         return IpHeader.builder()
-                //TODO: IP Header를 구성한다.
-                .build();
+            //TODO: IP Header를 구성한다.
+            .build();
     }
 }

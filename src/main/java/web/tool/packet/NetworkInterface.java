@@ -14,7 +14,9 @@ import web.tool.NetInfo;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 import static web.tool.packet.PacketHandler.TimestampPrecision.MICRO;
 
@@ -43,6 +45,16 @@ public class NetworkInterface {
         this.running = (pif.getFlags() & RUNNING_CONDITION) != 0;
         this.local = local;
         addMacAddress();
+    }
+
+    private NetworkInterface(String name, String description, MacAddress macAddress) {
+        this.name = name;
+        this.description = description;
+        this.macAddresses.add(macAddress);
+        this.loopBack = false;
+        this.up = false;
+        this.running = false;
+        this.local = true;
     }
 
     public static NetworkInterface of(NativeMappings.pcap_if pif, boolean local) {
