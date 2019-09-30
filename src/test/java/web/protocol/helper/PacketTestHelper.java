@@ -7,8 +7,8 @@ import org.junit.jupiter.api.BeforeEach;
 import web.protocol.Packet;
 import web.protocol.ethernet.EthernetPacket;
 import web.protocol.ethernet.EthernetPacketTest;
+import web.tool.FindNICWithRegistry;
 import web.tool.NetInfo;
-import web.tool.packet.FindWlanName;
 import web.tool.packet.NetworkInterface;
 import web.tool.packet.NetworkInterfaceService;
 import web.tool.packet.PacketHandler;
@@ -18,6 +18,7 @@ import web.tool.packet.dump.TcpDump;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static web.protocol.ethernet.EthernetPacketTest.buildEthernetPacket;
 
@@ -40,7 +41,7 @@ public class PacketTestHelper {
         localIp = netInfo.getIp();
         listener = packet -> gotPacket(packet);
         if (Platform.isWindows()) {
-            handler = getHandler(FindWlanName.findWlanNicName());
+            handler = getHandler(FindNICWithRegistry.retrieveRegistryNetworkCards());
             return;
         }
         handler = getHandler(nicName);
@@ -54,6 +55,14 @@ public class PacketTestHelper {
     public static PacketHandler getHandler(String nicName) throws Exception {
         NetworkInterface nif = NetworkInterfaceService.findByName(nicName);
         return nif.openLive(65536, NetworkInterface.PromiscuousMode.PROMISCUOUS, 10);
+    }
+
+    public static PacketHandler getHandler(List<FindNICWithRegistry.NetworkCard> cards) throws Exception {
+        return cards.stream()
+            .map(card -> NetworkInterfaceService.findByGUIDAndDescription(card.getServiceName(), card.getDescription()))
+            .filter(Optional::isPresent)
+            .map(Optional::get)
+            .findFirst().get().openLive(65536, NetworkInterface.PromiscuousMode.PROMISCUOUS, 10);
     }
 
     public static byte[] read(String filePath) throws PacketNativeException {

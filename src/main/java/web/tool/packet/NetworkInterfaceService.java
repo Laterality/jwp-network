@@ -6,6 +6,7 @@ import web.tool.packet.NetworkInterface.Errbuf;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class NetworkInterfaceService {
 
@@ -40,5 +41,12 @@ public class NetworkInterfaceService {
 
     private static void close(pcap_if nic) {
         NativeMappings.pcap_freealldevs(nic.getPointer());
+    }
+
+    public static Optional<NetworkInterface> findByGUIDAndDescription(String guid, String description) {
+        return findAll().stream()
+            .filter(v -> v.getName().equals(String.format("\\Device\\NPF_%s", guid)))
+            .filter(v -> v.getDescription().equals(description))
+            .findFirst();
     }
 }
