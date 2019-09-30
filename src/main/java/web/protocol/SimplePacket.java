@@ -17,7 +17,7 @@ public class SimplePacket implements Packet {
 
     @Override
     public int length() {
-        return 0;
+        return 3;
     }
 
     @Override
