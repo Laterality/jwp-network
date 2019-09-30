@@ -62,7 +62,7 @@ public class IcmpPacket implements Packet {
             List<byte[]> rawFields = new ArrayList<>();
             //TODO: ICMP Header의 필드를 구성한다.
             rawFields.add(ByteUtils.toByteArray(type.value));
-            rawFields.add(ByteUtils.toByteArray(type.value));
+            rawFields.add(ByteUtils.toByteArray(code.value));
             rawFields.add(ByteUtils.toByteArray(checksum));
             rawFields.add(ByteUtils.toByteArray(identification));
             rawFields.add(ByteUtils.toByteArray(sequenceNumber));
