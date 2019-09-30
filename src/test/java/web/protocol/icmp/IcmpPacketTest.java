@@ -64,6 +64,7 @@ public class IcmpPacketTest extends PacketTestHelper {
             .ttl((byte) 255)
             .version(Version.IPV4)
             .protocolIdentifier(ProtocolIdentifier.ICMP_V4)
+            .totalLength((short) (IpHeader.MIN_IPV4_HEADER_SIZE + IcmpHeader.ICMP_HEADER_SIZE + 3))
             .build();
     }
 }
